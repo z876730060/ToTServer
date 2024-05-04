@@ -33,7 +33,7 @@ func TestServer_Load(t *testing.T) {
 		err := server.LoadWebService(&http.Server{
 			Addr: "localhost:8080",
 			Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-				w.Write([]byte("Hello World"))
+				_, _ = w.Write([]byte("Hello World"))
 			}),
 		}).Start()
 		if err != nil {
@@ -60,7 +60,7 @@ func TestServer_InitCron(t *testing.T) {
 
 func TestServer_Cron(t *testing.T) {
 	cron := NewServer().InitCron().Cron()
-	if cron != nil {
+	if cron == nil {
 		t.Fail()
 	}
 	t.Log("CronEngine test successful")

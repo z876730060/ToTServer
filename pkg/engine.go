@@ -63,9 +63,3 @@ func (e *Engine) Stop() error {
 	slog.Info(fmt.Sprintf("Engine stop, name: %s ,pid: %d", e.name, e.Pid))
 	return e.cmd.Process.Kill()
 }
-
-// Release 释放关联资源
-func (e *Engine) Release() error {
-	slog.Info(fmt.Sprintf("Engine release, name: %s ,pid: %d", e.name, e.Pid))
-	return e.cmd.Process.Release()
-}
