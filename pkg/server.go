@@ -17,6 +17,7 @@ type Server struct {
 	exit   chan os.Signal
 	state  *atomic.Bool
 	banner string
+	cron   *Cron
 }
 
 func NewServer() *Server {
@@ -43,6 +44,16 @@ func (s *Server) InitLog(sign string) *Server {
 	s.log = logger
 	slog.Info("logging engine")
 	return s
+}
+
+func (s *Server) InitCron() *Server {
+	s.cron = NewCron()
+	slog.Info("cron engine")
+	return s
+}
+
+func (s *Server) Cron() *Cron {
+	return s.cron
 }
 
 func (s *Server) Start() error {

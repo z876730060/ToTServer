@@ -52,3 +52,16 @@ func TestServer_Banner(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestServer_InitCron(t *testing.T) {
+	NewServer().InitCron()
+	t.Log("CronEngine test successful")
+}
+
+func TestServer_Cron(t *testing.T) {
+	cron := NewServer().InitCron().Cron()
+	if cron != nil {
+		t.Fail()
+	}
+	t.Log("CronEngine test successful")
+}
