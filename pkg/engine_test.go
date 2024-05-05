@@ -2,6 +2,7 @@ package pkg
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"testing"
 	"time"
@@ -41,4 +42,84 @@ func TestEngine_Stop(t *testing.T) {
 		t.Fail()
 	}
 	t.Log("TestEngine_Stop successfully")
+}
+
+func TestNewEngineManage(t *testing.T) {
+	manage := NewEngineManage()
+	fmt.Println(manage)
+}
+
+func TestEngineManage_Add(t *testing.T) {
+	manage := NewEngineManage()
+	err := manage.Add(context.Background(), "test", &Options{
+		Path: "test.exe",
+		Dir:  "testdata",
+	})
+	if err != nil {
+		t.Log(err)
+		t.Fail()
+	}
+	t.Log("TestEngineManage_Add successfully")
+	fmt.Println(manage)
+}
+
+func TestEngineManage_GetCount(t *testing.T) {
+	manage := NewEngineManage()
+	if manage.GetCount() != 0 {
+		t.Fail()
+	}
+	err := manage.Add(context.Background(), "test", &Options{
+		Path: "test.exe",
+		Dir:  "testdata",
+	})
+	if err != nil {
+		t.Log(err)
+		t.Fail()
+	}
+	if manage.GetCount() != 1 {
+		t.Fail()
+	}
+}
+
+func TestEngineManage_Start(t *testing.T) {
+	manage := NewEngineManage()
+	if 0 != manage.GetRunCount() {
+		t.Fail()
+	}
+	err := manage.Add(context.Background(), "test", &Options{
+		Path: "test.exe",
+		Dir:  "testdata",
+	})
+	if err != nil {
+		t.Log(err)
+		t.Fail()
+	}
+	if err = manage.Start("test"); err != nil {
+		t.Log(err)
+		t.Fail()
+	}
+	if manage.GetRunCount() != 1 {
+		t.Fail()
+	}
+	manage.Stop("test")
+	t.Log("TestEngineManage_Start successfully")
+}
+
+func TestEngineManage_Stop(t *testing.T) {
+	manage := NewEngineManage()
+	if 0 != manage.GetRunCount() {
+		t.Fail()
+	}
+	err := manage.Add(context.Background(), "test", &Options{
+		Path: "test.exe",
+		Dir:  "testdata",
+	})
+	if err != nil {
+		t.Log(err)
+		t.Fail()
+	}
+	if err = manage.Stop("test"); err == nil {
+		t.Fail()
+	}
+	t.Log("TestEngineManage_Stop error successfully")
 }

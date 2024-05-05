@@ -18,6 +18,7 @@ type Server struct {
 	state  *atomic.Bool
 	banner string
 	cron   *Cron
+	engine *EngineManage
 }
 
 func NewServer() *Server {
@@ -52,8 +53,17 @@ func (s *Server) InitCron() *Server {
 	return s
 }
 
+func (s *Server) InitEngineManage() *Server {
+	s.engine = NewEngineManage()
+	return s
+}
+
 func (s *Server) Cron() *Cron {
 	return s.cron
+}
+
+func (s *Server) EngineManage() *EngineManage {
+	return s.engine
 }
 
 func (s *Server) Start() error {

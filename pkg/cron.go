@@ -2,10 +2,11 @@ package pkg
 
 import (
 	"errors"
-	"github.com/robfig/cron/v3"
 	"log/slog"
 	"sync"
 	"sync/atomic"
+
+	"github.com/robfig/cron/v3"
 )
 
 type Cron struct {
